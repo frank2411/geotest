@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import (
 	AbstractBaseUser, PermissionsMixin, BaseUserManager)
+from django.utils.translation import ugettext_lazy as _
 
 
 class CustomEmailUserManager(BaseUserManager):
@@ -57,6 +58,6 @@ class CustomEmailUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
-    	verbose_name = "User"
-    	verbose_name_plural = "Users"
+    	verbose_name = _("User")
+    	verbose_name_plural = _("Users")
 
