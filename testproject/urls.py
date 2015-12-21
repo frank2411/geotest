@@ -3,17 +3,16 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'testproject.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
+urlpatterns = patterns(
+    '',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('custom_utils.urls')),
+    url(r'^terrains/', include('terrains.urls')),
+    url(r'^$', include('custom_utils.urls')),
 )
 
 if 'debug_toolbar' in settings.INSTALLED_APPS:
     import debug_toolbar
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         url(r'^__debug__/', include(debug_toolbar.urls)),
     )

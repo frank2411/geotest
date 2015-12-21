@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      /*#map { width:500px; height: 500px; }*/
+    </style>
+
+</head>
+<body>
+
+<!--     <div id="map"></div>
+ -->
+
+    <form action="." method="GET">
+        {{ form }}
+        <input type="submit" value="Search">
+    </form>
+
+
+    <div class="results">
+        {% if terrains %}
+            {% for terrain in terrains %}
+                <div>{{ terrain }}</div>
+            {% endfor %}
+        {% else %}
+            <div>No results found</div>
+        {% endif %}
+    </div>
+
+
+    <script type="text/javascript">
+
+/*        var to_polygon = {{to_polygon|safe}}
+
+        console.log(to_polygon[0].fields.geom)
+
+        function initMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 8
+          });
+        }*/
+
+    </script>
+<!-- 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYVdMO9KjlIwe7pir9347_QFID59qDv3I&callback=initMap"></script>
+ -->
+</body>
+</html>

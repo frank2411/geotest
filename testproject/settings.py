@@ -23,13 +23,15 @@ if "www" in os.getcwd():
     REMOTE_SERVER = True
 if REMOTE_SERVER:
     ALLOWED_HOSTS = ('testproject.com',)
-    """A list of strings representing the host/domain names that this Django site can serve."""
+    """A list of strings representing the host/domain
+    names that this Django site can serve."""
     DEBUG = False
     TEMPLATE_DEBUG = False
     """ True only in development to debug your application"""
 else:
     ALLOWED_HOSTS = ('localhost', '127.0.0.1')
-    """A list of strings representing the host/domain names that this Django site can serve."""
+    """A list of strings representing the host/domain
+    names that this Django site can serve."""
     DEBUG = True
     TEMPLATE_DEBUG = True
     """ True only in development to debug your application"""
@@ -42,13 +44,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'custom_utils',
+    'terrains',
 ]
+
+AUTH_USER_MODEL = 'custom_utils.CustomEmailUser'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates",],
+        'DIRS': ["templates", ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,25 +68,24 @@ TEMPLATES = [
 ]
 
 
-
 ADMINS = (("errors", "errors@testproject.com"),)
 
 DATABASES = {
     'remote': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'name',  # '/path/example.db'. Path to database file if using sqlite3.
-        'USER': 'user',  # Not used with sqlite3.
-        'PASSWORD': 'password',  # Not used with sqlite3.
-        'HOST': '127.0.0.1',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',  # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'name',
+        'USER': 'user',
+        'PASSWORD': 'password',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     },
     'local': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'testdb',  # os.path.dirname(__file__) + "/../dev.db",#'/path/example.db'. Path to database file if using sqlite3.
-        'USER': 'postgres',  # Not used with sqlite3.
-        'PASSWORD': 'admin',  # Not used with sqlite3.
-        'HOST': '127.0.0.1',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',  # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'testdb',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     },
 }
 
@@ -101,7 +106,8 @@ if REMOTE_SERVER:
 else:
     DATABASES['default'] = DATABASES['local']
     INSTALLED_APPS.append('debug_toolbar')
-    MIDDLEWARE_CLASSES.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+    MIDDLEWARE_CLASSES.append(
+        'debug_toolbar.middleware.DebugToolbarMiddleware')
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
     SHOW_TOOLBAR_CALLBACK = True
 
