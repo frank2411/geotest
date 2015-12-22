@@ -7,18 +7,77 @@
     <style type="text/css">
       html, body { height: 100%; margin: 0; padding: 0; }
       #map { width:500px; height: 500px; }
+      .left {float: left;}
+      .clear {clear: both;}
+      .half {width: 50%;}
+      .box {border: 1px solid;}
+      .active {background: red;}
+      .legend {margin-top: 20px;}
+      .step {height: 37px;position: relative;}
+      .step .square {display: inline-block; height: 37px; width: 30px; /*border-bottom: 1px solid;*/} 
+      .step .square.blue {background: url('/static/terrains/appartements/appartment-blue.png') no-repeat;}
+      .step .square.yellow {background: url('/static/terrains/appartements/appartment-yellow.png')  no-repeat;}
+      .step .square.red {background: url('/static/terrains/appartements/appartment-red.png')  no-repeat;}
+      .step .square.green {background: url('/static/terrains/appartements/appartment-green.png')  no-repeat;}
+      .step .square.azure {background: url('/static/terrains/appartements/appartment-azure.png')  no-repeat;}
+      .step .square.zero {height: 37px;}
+      .step .values {position: absolute;top: 8px;left: 40px;}
+      .step .value {display: inline-block;}
     </style>
+    <script src="/static/terrains/js/jquery.min.js"></script>
 
 </head>
 <body>
+    <div class="container">
+        <div class="left half">
+            <div id="map"></div>
+            <div class="legend">
+                {% for r, values in ranges.items %}
+                    <div class="step">
+                        <div class="square {{values.color}}"></div>
+                        <div class="values">
+                            <div class="value">{{values.min_value}}</div>
+                            <div class="value"> - {{values.max_value}}</div>                            
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
-    <div id="map"></div>
+        <div class="left half">
+            
+            <form action="" method="GET">
+                {{ordering_form}}
+                <input type="submit" value="search"> 
+            </form>
+
+            {% for terrain in terrains %}
+                
+                <div class="box" data-marker="{{forloop.counter0}}">
+                    {{terrain}} value: {{terrain.total_value}} 
+                    terrain: {{terrain.valeur_terrain}}
+                    batiment: {{terrain.valeur_batiment}}
+                </div>
+
+            {% endfor %}
+
+        </div>
+    
+        <div class="clear"></div>
+    </div>
+
     <script type="text/javascript">
-        var terrains = {{terrains|safe}};
+        var terrains = {{terrains_json|safe}};
+        var ranges = {{ranges_json|safe}}
         var map;
         var markers = [];
         var infowindows = [];
-
+        var ordering = "{{ordering_param}}";
+        var ordering_attributes = {
+            "-total_value": "total_value",
+            "-valeur_terrain": "valeur_terrain",
+            "-valeur_batiment": "valeur_batiment",
+        }
 
         function closeInfos(){
           if(infowindows.length > 0){
@@ -28,30 +87,78 @@
           }
         }
 
-        function addInfoWindow(marker, data, index) {
-            var infowindow = new google.maps.InfoWindow({
-                content: "ECCOLOOOO"
-            });
+        function addInfoWindow(marker, data) {
 
-            infowindows.push(infowindow)
-            console.log(infowindows[index])
+            var contentHtml = "<div><b>Valeur batiment:</b> "+ data.valeur_batiment +"</div>"+
+            "<div><b>Valeur terrain:</b> "+ data.valeur_terrain +"</div>"+
+            "<div><b>Addresse complet:</b>"+ data.complet +"</div>"+
+            "<div><b>Numero compte foncier:</b> "+ data.compte_foncier +"</div>"+
+            "<div><b>Nom proprietaire:</b> "+ data.nom_proprietaire +"</div>"+
+            "<div><b>Prenom proprietaire:</b> "+ data.prenom_proprietaire +"</div>"+
+            "<div><b>Addresse proprietaire:</b> "+ data.complet_adr_prop +"</div>"+
+            "<div><b>Ville Adresse proprietaire:</b> "+ data.ville_adr_prop +"</div>"+
+            "<div><b>Code postal proprietaire:</b> "+ data.cp_adr_prop +"</div>"+
+            "<div><b>Reglementation d'urbanisme:</b> "+ data.regl_usage +"</div>"+
+            "<div><b>Hauteur:</b> "+ data.regl_hauteur +"</div>"+
+            "<div><b>Etages:</b> "+ data.regl_etages +"</div>"+
+            "<div><b>Densite:</b> "+ data.regl_densite +"</div>"+
+            "<div><b>Implantation:</b> "+ data.regl_implantation +"</div>"+
+            "<div><b>Unites de paysage:</b> "+ data.regl_unite_paysage +"</div>"+
+            "<div><b>Nom de l'immeuble:</b> "+ data.zone_patrimoine +"</div>"+
+            "<div><b>Type de zone tampon:</b> "+ data.type_zone_patrimoine +"</div>"+
+            "<div><b>Interet patrimonial:</b> "+ data.interet_immeuble +"</div>"+
+            "<div><b>Quartier d'interet:</b> "+ data.interet_quartier +"</div>"+
+            "<div><b>Moins de 500 m du métro:</b> "+ data.tampon_500_metro +"</div>";
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentHtml
+            });
 
             marker.addListener('click', function() {
                 closeInfos();
                 infowindows[0] = infowindow
                 infowindow.open(marker.get('map'), marker);
+                map.setZoom(15)
+                map.setCenter(marker.getPosition())
+                box_index = markers.indexOf(marker)
+                $(".box[data-marker="+box_index+"]").siblings().removeClass("active")
+                $(".box[data-marker="+box_index+"]").addClass("active")
             });
 
         }
+    
+        function getIcon(obj) {
+            if(ordering) {
+                value = obj[ordering_attributes[ordering]];
+            } else {
+                value = obj.total_value
+            }
 
+            if (value >= ranges[1].min_value && value <= ranges[1].max_value) {
+                return "/static/terrains/appartements/appartment-red.png";
+            } else if (value >= ranges[2].min_value && value <= ranges[2].max_value) {
+                return "/static/terrains/appartements/appartment-yellow.png";
+            } else if (value >= ranges[3].min_value && value <= ranges[3].max_value) {
+                return "/static/terrains/appartements/appartment-blue.png";
+            } else if (value >= ranges[4].min_value && value <= ranges[4].max_value) {
+                return "/static/terrains/appartements/appartment-azure.png";
+            } else if (value >= ranges[5].min_value && value <= ranges[5].max_value) {
+                return "/static/terrains/appartements/appartment-green.png";
+            }
+        }
+        
         function addMarkers(map){
 
             for (terrain in terrains) {
                 var obj = terrains[terrain];
+
                 var latLng = new google.maps.LatLng(obj.fields.latitude, obj.fields.longitude);
+                var icon = getIcon(obj.fields)
+
                 var marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
+                    icon: icon,
                 });
 
                 markers.push(marker);
@@ -64,12 +171,22 @@
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
-            zoom: 15
+            zoom: 13
           });
 
           addMarkers(map)
 
         }
+
+        $(document).ready(function() {
+            $(".box").each(function() {
+                $(this).click(function() {
+                    var markerIndex = $(this).data("marker");
+                    google.maps.event.trigger(markers[markerIndex], "click");
+                });
+            })
+        })
+
 
     </script>
 

@@ -32,3 +32,15 @@ class CirconscriptionSearchForm(forms.Form):
         ],
         required=False
     )
+
+
+class TerrainOrderingForm(forms.Form):
+    ordering = forms.ChoiceField(
+        label="",
+        choices=(
+            ("-total_value", "Valeur totale plus haute"),
+            ("-valeur_terrain", "Valeur terrain plus haute"),
+            ("-valeur_batiment", "Valeur batiment plus haute"),
+        ),
+        initial="-total_value"
+    )

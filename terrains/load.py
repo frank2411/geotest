@@ -26,7 +26,6 @@ world_shp = os.path.abspath(
 
 def run(verbose=True):
     lm = LayerMapping(
-        Circonscription, world_shp, circonscription_mapping,
-        transform=True, encoding='utf-8')
+        Circonscription, world_shp, circonscription_mapping, encoding='utf-8')
 
     lm.save(strict=True, verbose=verbose)

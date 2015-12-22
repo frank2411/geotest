@@ -25,7 +25,7 @@ class Circonscription(models.Model):
     quipopcnt = models.IntegerField()
     enlegaldsc = models.CharField(max_length=200)
     frlegaldsc = models.CharField(max_length=200)
-    geom = models.PolygonField(srid=4269)
+    geom = models.PolygonField(srid=4326)
     objects = models.GeoManager()
 
     def __unicode__(self):
@@ -127,12 +127,64 @@ class Terrain(models.Model):
         max_length=254
     )
 
+    total_value = models.IntegerField(null=True)
+
     longitude = models.FloatField(null=True)
     latitude = models.FloatField(null=True)
 
-    coordinates = models.PointField(null=True)
+    coordinates = models.PointField(null=True, srid=4326)
 
     objects = models.GeoManager()
+
+    @staticmethod
+    def generate_ranges(queryset, ordering):
+        ranges = {}
+        ordering_attributes = {
+            "-total_value": "total_value",
+            "-valeur_terrain": "valeur_terrain",
+            "-valeur_batiment": "valeur_batiment",
+        }
+        first_element = queryset.first()
+        last_element = queryset.last()
+
+        max_value = first_element.total_value
+        min_value = last_element.total_value
+
+        if ordering:
+            max_value = getattr(first_element, ordering_attributes[ordering])
+            min_value = getattr(last_element, ordering_attributes[ordering])
+
+        # constant = max_value / 3
+        constant = max_value / 5
+
+        colors = {
+            1: "red",
+            2: "yellow",
+            3: "blue",
+            4: "azure",
+            5: "green",
+        }
+
+        for i in reversed(range(1, 6)):
+            if not ranges:
+                ranges[i] = {
+                    "min_value": min_value,
+                    "max_value": constant,
+                    "color": colors[i]
+                }
+                continue
+
+            min_val = ranges[i + 1]["max_value"] + 1
+            max_val = ranges[i + 1]["max_value"] + constant
+            if i == 1:
+                max_val = max_value
+            ranges[i] = {
+                "min_value": min_val,
+                "max_value": max_val,
+                "color": colors[i]
+            }
+
+        return ranges
 
     @staticmethod
     def get_terrain_in_circonscription(fednum):
@@ -198,7 +250,8 @@ class Terrain(models.Model):
 
     def save(self, *args, **kwargs):
         pointstr = 'POINT({} {})'.format(self.longitude, self.latitude)
-        self.coordinates = GEOSGeometry(pointstr, srid=4269)
+        self.coordinates = GEOSGeometry(pointstr, srid=4326)
+        self.total_value = self.valeur_batiment + self.valeur_terrain
         super(Terrain, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -207,7 +260,7 @@ class Terrain(models.Model):
     class Meta:
         verbose_name = _(u"Terrain")
         verbose_name_plural = _(u"Terrains")
-        ordering = ["munid", ]
+        ordering = ["-total_value"]
 
 
 class TerrainImport(models.Model):

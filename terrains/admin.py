@@ -4,7 +4,7 @@ from terrains.models import Terrain, TerrainImport, Circonscription
 from terrains.forms import TerrainImportAdminForm
 
 
-class TerrainAdmin(geoadmin.GeoModelAdmin):
+class TerrainAdmin(geoadmin.OSMGeoAdmin):
     pass
 
 
@@ -16,7 +16,7 @@ class TerrainImportAdmin(admin.ModelAdmin):
         Terrain.generate_terrain_from_csv(obj.csvfile)
 
 
-class CirconscriptionAdmin(admin.ModelAdmin):
+class CirconscriptionAdmin(geoadmin.OSMGeoAdmin):
     search_fields = ("enname", "frname", )
     list_filter = ("provcode", )
 
