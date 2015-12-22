@@ -6,10 +6,10 @@
 
     <style type="text/css">
       html, body { height: 100%; margin: 0; padding: 0; }
-      #map { width:500px; height: 500px; }
+      #map {height: 500px; }
       .left {float: left;}
       .clear {clear: both;}
-      .half {width: 50%;}
+      .half {width: 46%;padding: 15px;}
       .box {border: 1px solid;}
       .active {background: red;}
       .legend {margin-top: 20px;}
@@ -23,6 +23,7 @@
       .step .square.zero {height: 37px;}
       .step .values {position: absolute;top: 8px;left: 40px;}
       .step .value {display: inline-block;}
+      .box-container {height: 480px; overflow-y: scroll;}
     </style>
     <script src="/static/terrains/js/jquery.min.js"></script>
 
@@ -50,7 +51,8 @@
                 {{ordering_form}}
                 <input type="submit" value="search"> 
             </form>
-
+            
+            <div class="box-container">
             {% for terrain in terrains %}
                 
                 <div class="box" data-marker="{{forloop.counter0}}">
@@ -60,7 +62,7 @@
                 </div>
 
             {% endfor %}
-
+            </div>
         </div>
     
         <div class="clear"></div>
@@ -77,6 +79,9 @@
             "-total_value": "total_value",
             "-valeur_terrain": "valeur_terrain",
             "-valeur_batiment": "valeur_batiment",
+            "total_value": "total_value",
+            "valeur_terrain": "valeur_terrain",
+            "valeur_batiment": "valeur_batiment",
         }
 
         function closeInfos(){
@@ -128,7 +133,9 @@
         }
     
         function getIcon(obj) {
-            if(ordering) {
+            // console.log(ordering)
+            // console.log(typeof ordering)
+            if(ordering && ordering != "None") {
                 value = obj[ordering_attributes[ordering]];
             } else {
                 value = obj.total_value

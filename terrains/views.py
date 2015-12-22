@@ -4,7 +4,14 @@ from terrains.forms import CirconscriptionSearchForm, TerrainOrderingForm
 from django.core import serializers
 import json
 
-allowed_orderings = ["-total_value", "-valeur_terrain", "-valeur_batiment"]
+allowed_orderings = [
+    "-total_value",
+    "-valeur_terrain",
+    "-valeur_batiment",
+    "total_value",
+    "valeur_terrain",
+    "valeur_batiment",
+]
 
 
 def terrains(request):

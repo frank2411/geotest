@@ -41,6 +41,9 @@ class TerrainOrderingForm(forms.Form):
             ("-total_value", "Valeur totale plus haute"),
             ("-valeur_terrain", "Valeur terrain plus haute"),
             ("-valeur_batiment", "Valeur batiment plus haute"),
+            ("total_value", "Valeur totale plus basse"),
+            ("valeur_terrain", "Valeur terrain plus basse"),
+            ("valeur_batiment", "Valeur batiment plus basse"),
         ),
         initial="-total_value"
     )

@@ -143,6 +143,9 @@ class Terrain(models.Model):
             "-total_value": "total_value",
             "-valeur_terrain": "valeur_terrain",
             "-valeur_batiment": "valeur_batiment",
+            "total_value": "total_value",
+            "valeur_terrain": "valeur_terrain",
+            "valeur_batiment": "valeur_batiment",
         }
         first_element = queryset.first()
         last_element = queryset.last()
@@ -153,6 +156,11 @@ class Terrain(models.Model):
         if ordering:
             max_value = getattr(first_element, ordering_attributes[ordering])
             min_value = getattr(last_element, ordering_attributes[ordering])
+            if "-" not in ordering:
+                min_value = getattr(
+                    first_element, ordering_attributes[ordering])
+                max_value = getattr(
+                    last_element, ordering_attributes[ordering])
 
         # constant = max_value / 3
         constant = max_value / 5
