@@ -24,7 +24,8 @@
     <div class="results">
         {% if terrains %}
             {% for terrain in terrains %}
-                <div>{{ terrain }}</div>
+                <div>{{ terrain }} {{terrain.valeur_terrain}}</div>
+
             {% endfor %}
         {% else %}
             <div>No results found</div>

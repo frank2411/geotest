@@ -12,26 +12,6 @@ CAST_FUNCTIONS = {
 }
 
 
-class Circonscription(models.Model):
-    nid = models.CharField(max_length=254)
-    fednum = models.IntegerField()
-    enname = models.CharField(max_length=100)
-    frname = models.CharField(max_length=100)
-    provcode = models.CharField(max_length=2)
-    creadt = models.CharField(max_length=8)
-    revdt = models.CharField(max_length=8)
-    reporder = models.CharField(max_length=8)
-    decpopcnt = models.IntegerField()
-    quipopcnt = models.IntegerField()
-    enlegaldsc = models.CharField(max_length=200)
-    frlegaldsc = models.CharField(max_length=200)
-    geom = models.PolygonField(srid=4326)
-    objects = models.GeoManager()
-
-    def __unicode__(self):
-        return self.frname
-
-
 class Terrain(models.Model):
 
     ID = models.IntegerField(_(u"Identifiant unique"), unique=True)
@@ -163,17 +143,20 @@ class Terrain(models.Model):
                     last_element, ordering_attributes[ordering])
 
         # constant = max_value / 3
-        constant = max_value / 5
+        constant = max_value / 8
 
         colors = {
-            1: "red",
-            2: "yellow",
-            3: "blue",
-            4: "azure",
-            5: "green",
+            1: "purple",
+            2: "purplelight",
+            3: "purplesuperlight",
+            4: "red",
+            5: "yellow",
+            6: "blue",
+            7: "azure",
+            8: "green",
         }
 
-        for i in reversed(range(1, 6)):
+        for i in reversed(range(1, 9)):
             if not ranges:
                 ranges[i] = {
                     "min_value": min_value,
@@ -280,3 +263,30 @@ class TerrainImport(models.Model):
     class Meta:
         verbose_name = _(u"Terrain import")
         verbose_name_plural = _(u"Terrain imports")
+
+
+class Circonscription(models.Model):
+    nid = models.CharField(max_length=254)
+    fednum = models.IntegerField()
+    enname = models.CharField(max_length=100)
+    frname = models.CharField(max_length=100)
+    provcode = models.CharField(max_length=2)
+    creadt = models.CharField(max_length=8)
+    revdt = models.CharField(max_length=8)
+    reporder = models.CharField(max_length=8)
+    decpopcnt = models.IntegerField()
+    quipopcnt = models.IntegerField()
+    enlegaldsc = models.CharField(max_length=200)
+    frlegaldsc = models.CharField(max_length=200)
+    valeur_terrain_moyen = models.BigIntegerField(null=True)
+    valeur_batiment_moyen = models.BigIntegerField(null=True)
+    valeur_terrain_min = models.BigIntegerField(null=True)
+    valeur_batiment_min = models.BigIntegerField(null=True)
+    valeur_terrain_max = models.BigIntegerField(null=True)
+    valeur_batiment_max = models.BigIntegerField(null=True)
+    geom = models.PolygonField(srid=4326)
+    terrains = models.ManyToManyField(Terrain, blank=True)
+    objects = models.GeoManager()
+
+    def __unicode__(self):
+        return self.frname

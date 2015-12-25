@@ -20,6 +20,9 @@
       .step .square.red {background: url('/static/terrains/appartements/appartment-red.png')  no-repeat;}
       .step .square.green {background: url('/static/terrains/appartements/appartment-green.png')  no-repeat;}
       .step .square.azure {background: url('/static/terrains/appartements/appartment-azure.png')  no-repeat;}
+      .step .square.purple {background: url('/static/terrains/appartements/appartment-purple.png')  no-repeat;}
+      .step .square.purplelight {background: url('/static/terrains/appartements/appartment-purplelight.png')  no-repeat;}
+      .step .square.purplesuperlight {background: url('/static/terrains/appartements/appartment-purplesuperlight.png')  no-repeat;}
       .step .square.zero {height: 37px;}
       .step .values {position: absolute;top: 8px;left: 40px;}
       .step .value {display: inline-block;}
@@ -142,14 +145,20 @@
             }
 
             if (value >= ranges[1].min_value && value <= ranges[1].max_value) {
-                return "/static/terrains/appartements/appartment-red.png";
+                return "/static/terrains/appartements/appartment-purple.png";
             } else if (value >= ranges[2].min_value && value <= ranges[2].max_value) {
-                return "/static/terrains/appartements/appartment-yellow.png";
+                return "/static/terrains/appartements/appartment-purpleligth.png";
             } else if (value >= ranges[3].min_value && value <= ranges[3].max_value) {
-                return "/static/terrains/appartements/appartment-blue.png";
+                return "/static/terrains/appartements/appartment-purplesuperligth.png";
             } else if (value >= ranges[4].min_value && value <= ranges[4].max_value) {
-                return "/static/terrains/appartements/appartment-azure.png";
+                return "/static/terrains/appartements/appartment-red.png";
             } else if (value >= ranges[5].min_value && value <= ranges[5].max_value) {
+                return "/static/terrains/appartements/appartment-yellow.png";
+            } else if (value >= ranges[6].min_value && value <= ranges[6].max_value) {
+                return "/static/terrains/appartements/appartment-blue.png";
+            } else if (value >= ranges[7].min_value && value <= ranges[7].max_value) {
+                return "/static/terrains/appartements/appartment-azure.png";
+            } else if (value >= ranges[8].min_value && value <= ranges[8].max_value) {
                 return "/static/terrains/appartements/appartment-green.png";
             }
         }

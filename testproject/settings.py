@@ -22,14 +22,14 @@ REMOTE_SERVER = False
 if "www" in os.getcwd():
     REMOTE_SERVER = True
 if REMOTE_SERVER:
-    ALLOWED_HOSTS = ('testproject.com',)
+    ALLOWED_HOSTS = ('testproject.com', 'www.terrains.com')
     """A list of strings representing the host/domain
     names that this Django site can serve."""
-    DEBUG = False
-    TEMPLATE_DEBUG = False
+    DEBUG = True
+    TEMPLATE_DEBUG = True
     """ True only in development to debug your application"""
 else:
-    ALLOWED_HOSTS = ('localhost', '127.0.0.1')
+    ALLOWED_HOSTS = ('localhost', '127.0.0.1', 'www.terrains.com')
     """A list of strings representing the host/domain
     names that this Django site can serve."""
     DEBUG = True
@@ -72,10 +72,10 @@ ADMINS = (("errors", "errors@testproject.com"),)
 
 DATABASES = {
     'remote': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'name',
-        'USER': 'user',
-        'PASSWORD': 'password',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'testdb',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
