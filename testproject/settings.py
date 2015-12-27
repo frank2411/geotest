@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'custom_utils',
     'terrains',
+    'djgeojson',
 ]
 
 AUTH_USER_MODEL = 'custom_utils.CustomEmailUser'
@@ -105,11 +106,6 @@ if REMOTE_SERVER:
     DATABASES['default'] = DATABASES['remote']
 else:
     DATABASES['default'] = DATABASES['local']
-    INSTALLED_APPS.append('debug_toolbar')
-    MIDDLEWARE_CLASSES.append(
-        'debug_toolbar.middleware.DebugToolbarMiddleware')
-    DEBUG_TOOLBAR_PATCH_SETTINGS = False
-    SHOW_TOOLBAR_CALLBACK = True
 
 ROOT_URLCONF = 'testproject.urls'
 

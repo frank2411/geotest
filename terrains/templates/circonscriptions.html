@@ -1,3 +1,4 @@
+{% load geojson_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,14 +7,14 @@
 
     <style type="text/css">
       html, body { height: 100%; margin: 0; padding: 0; }
-      /*#map { width:500px; height: 500px; }*/
+      #map { width:500px; height: 500px; }
     </style>
 
 </head>
 <body>
 
-<!--     <div id="map"></div>
- -->
+    <div id="map"></div>
+
 
     <form action="." method="GET">
         {{ form }}
@@ -35,20 +36,34 @@
 
     <script type="text/javascript">
 
-/*        var to_polygon = {{to_polygon|safe}}
+        //var to_polygon = {{circonscriptions_geojson|geojsonfeature|safe}};
+        //var to_markers = 
+        var to_polygon = {{circonscriptions_geojson|safe}}
 
-        console.log(to_polygon[0].fields.geom)
+        //console.log({{circonscriptions_geojson|safe}})
 
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 8
+            center: {lat: 45.498469, lng: -73.562537},
+            zoom: 12
           });
-        }*/
+
+          map.data.addGeoJson(to_polygon)
+          map.data.setStyle(function(feature) {
+            var color = 'red';
+            return ({
+              fillColor: color,
+              strokeColor: color,
+              strokeWeight: 3
+            });
+          });
+
+
+        }
 
     </script>
-<!-- 
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYVdMO9KjlIwe7pir9347_QFID59qDv3I&callback=initMap"></script>
- -->
+
 </body>
 </html>

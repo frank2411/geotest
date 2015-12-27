@@ -187,12 +187,32 @@
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
-            zoom: 13
+            zoom: 11
           });
 
           addMarkers(map)
 
         }
+
+        /*function initMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 45.498469, lng: -73.562537},
+            zoom: 12
+          });
+
+          map.data.addGeoJson(to_polygon)
+          map.data.setStyle(function(feature) {
+            var color = 'red';
+            return ({
+              fillColor: color,
+              strokeColor: color,
+              strokeWeight: 3
+            });
+          });
+
+          addMarkers(map)
+
+        }*/
 
         $(document).ready(function() {
             $(".box").each(function() {

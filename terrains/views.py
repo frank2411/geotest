@@ -4,6 +4,7 @@ from terrains.forms import CirconscriptionSearchForm, TerrainOrderingForm
 from django.core import serializers
 import json
 
+
 allowed_orderings = [
     "-total_value",
     "-valeur_terrain",
@@ -30,6 +31,10 @@ def terrains(request):
     terrains_json = serializers.serialize("json", terrains)
     ranges = Terrain.generate_ranges(terrains, ordering)
 
+    # circonscriptions = Circonscription.objects.filter(
+    #     terrains__isnull=False).prefetch_related("terrains").distinct()
+
+    # context["circonscriptions"] = circonscriptions
     context["ranges"] = ranges
     context["ranges_json"] = json.dumps(ranges)
     context["terrains_json"] = terrains_json
@@ -42,17 +47,24 @@ def terrains(request):
 
 def circonscriptions(request):
     context = {}
-    terrains = None
-    # circonscriptions = Circonscription.objects.filter(provcode="QC")
+    circonscriptions = Circonscription.objects.filter(
+        terrains__isnull=False).prefetch_related(
+        "terrains"
+    ).distinct()
 
-    # context["to_polygon"] = serializers.serialize(
-    #     "json", [circonscriptions[0]])
-    # context["circonscriptions"] = circonscriptions
+    # circonscriptions = Circonscription.objects.filter(
+    #     provcode="QC").prefetch_related(
+    #     "terrains"
+    # ).distinct()
 
-    if request.GET.get("circonscriptions"):
-        terrains = Terrain.get_terrain_in_circonscription(
-            request.GET.get("circonscriptions"))
+    # if request.GET.get("circonscriptions"):
+    #     terrains = Terrain.get_terrain_in_circonscription(
+    #         request.GET.get("circonscriptions"))
 
+    context["circonscriptions_geojson"] = serializers.serialize(
+        'geojson', circonscriptions)
+
+    context["circonscriptions"] = circonscriptions
     context["terrains"] = terrains
     context["form"] = CirconscriptionSearchForm(request.GET)
     return render(request, "circonscriptions.html", context)
