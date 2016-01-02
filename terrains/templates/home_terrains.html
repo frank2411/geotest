@@ -73,7 +73,7 @@
 
     <script type="text/javascript">
         var terrains = {{terrains_json|safe}};
-        var ranges = {{ranges_json|safe}}
+        var ranges = {{ranges_json|safe}};
         var map;
         var markers = [];
         var infowindows = [];
@@ -124,13 +124,13 @@
 
             marker.addListener('click', function() {
                 closeInfos();
-                infowindows[0] = infowindow
+                infowindows[0] = infowindow;
                 infowindow.open(marker.get('map'), marker);
-                map.setZoom(15)
-                map.setCenter(marker.getPosition())
-                box_index = markers.indexOf(marker)
-                $(".box[data-marker="+box_index+"]").siblings().removeClass("active")
-                $(".box[data-marker="+box_index+"]").addClass("active")
+                map.setZoom(15);
+                map.setCenter(marker.getPosition());
+                box_index = markers.indexOf(marker);
+                $(".box[data-marker="+box_index+"]").siblings().removeClass("active");
+                $(".box[data-marker="+box_index+"]").addClass("active");
             });
 
         }
@@ -141,7 +141,7 @@
             if(ordering && ordering != "None") {
                 value = obj[ordering_attributes[ordering]];
             } else {
-                value = obj.total_value
+                value = obj.total_value;
             }
 
             if (value >= ranges[1].min_value && value <= ranges[1].max_value) {
@@ -169,7 +169,7 @@
                 var obj = terrains[terrain];
 
                 var latLng = new google.maps.LatLng(obj.fields.latitude, obj.fields.longitude);
-                var icon = getIcon(obj.fields)
+                var icon = getIcon(obj.fields);
 
                 var marker = new google.maps.Marker({
                     position: latLng,
@@ -178,8 +178,8 @@
                 });
 
                 markers.push(marker);
-                addInfoWindow(marker, obj.fields)
-                map.panTo(latLng)
+                addInfoWindow(marker, obj.fields);
+                map.panTo(latLng);
             }
 
         }
@@ -190,29 +190,9 @@
             zoom: 11
           });
 
-          addMarkers(map)
+          addMarkers(map);
 
         }
-
-        /*function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 45.498469, lng: -73.562537},
-            zoom: 12
-          });
-
-          map.data.addGeoJson(to_polygon)
-          map.data.setStyle(function(feature) {
-            var color = 'red';
-            return ({
-              fillColor: color,
-              strokeColor: color,
-              strokeWeight: 3
-            });
-          });
-
-          addMarkers(map)
-
-        }*/
 
         $(document).ready(function() {
             $(".box").each(function() {
@@ -220,8 +200,8 @@
                     var markerIndex = $(this).data("marker");
                     google.maps.event.trigger(markers[markerIndex], "click");
                 });
-            })
-        })
+            });
+        });
 
 
     </script>

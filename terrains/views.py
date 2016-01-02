@@ -31,10 +31,6 @@ def terrains(request):
     terrains_json = serializers.serialize("json", terrains)
     ranges = Terrain.generate_ranges(terrains, ordering)
 
-    # circonscriptions = Circonscription.objects.filter(
-    #     terrains__isnull=False).prefetch_related("terrains").distinct()
-
-    # context["circonscriptions"] = circonscriptions
     context["ranges"] = ranges
     context["ranges_json"] = json.dumps(ranges)
     context["terrains_json"] = terrains_json
@@ -66,5 +62,5 @@ def circonscriptions(request):
 
     context["circonscriptions"] = circonscriptions
     context["terrains"] = terrains
-    context["form"] = CirconscriptionSearchForm(request.GET)
+    # context["form"] = CirconscriptionSearchForm(request.GET)
     return render(request, "circonscriptions.html", context)
