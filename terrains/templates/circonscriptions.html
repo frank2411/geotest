@@ -6,7 +6,7 @@
 
     <style type="text/css">
         html, body { height: 100%; margin: 0; padding: 0; }
-        #map {height: 300px; }
+        #map {height: 400px; }
         .left {float: left;}
         .clear {clear: both;}
         .half {width: 46%;padding: 15px;}
@@ -72,7 +72,7 @@
                             <span class="plus">
                                 <img class="plus-icon" src="/static/terrains/icons/plus-icon.png" alt="">
                                 <img class="minus-icon" src="/static/terrains/icons/minus-icon.png" alt="">
-                            </span> {{circonscription.frname}}</td>
+                            </span> {{circonscription.frname}} ({{circonscription.terrains.count}})</td>
                         <td>{{circonscription.valeur_terrain_moyen}}</td>
                         <td>{{circonscription.valeur_batiment_moyen}}</td>
                         <td>{{circonscription.valeur_terrain_min}}</td>
@@ -95,7 +95,7 @@
                                     <td>{{terrain}}</td>
                                     <td>{{terrain.valeur_terrain}}</td>
                                     <td>{{terrain.valeur_batiment}}</td>
-                                    <td>Show on map</td>
+                                    <td><span class="show-on-map" data-pk="{{terrain.pk}}">Show on map</span></td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -115,6 +115,77 @@
     <script type="text/javascript">
 
         var to_polygon = {{circonscriptions_geojson|safe}};
+        var terrains = {{terrains_json|safe}};
+        var markers = [];
+        var markers_map = {}
+        var infowindows = [];
+
+        function closeInfos(){
+          if(infowindows.length > 0){
+            infowindows[0].set("marker", null);
+            infowindows[0].close();
+            infowindows.length = 0;
+          }
+        }
+
+        function addInfoWindow(marker, data) {
+
+            var contentHtml = "<div><b>Valeur batiment:</b> "+ data.valeur_batiment +"</div>"+
+            "<div><b>Valeur terrain:</b> "+ data.valeur_terrain +"</div>"+
+            "<div><b>Addresse complet:</b>"+ data.complet +"</div>"+
+            "<div><b>Numero compte foncier:</b> "+ data.compte_foncier +"</div>"+
+            "<div><b>Nom proprietaire:</b> "+ data.nom_proprietaire +"</div>"+
+            "<div><b>Prenom proprietaire:</b> "+ data.prenom_proprietaire +"</div>"+
+            "<div><b>Addresse proprietaire:</b> "+ data.complet_adr_prop +"</div>"+
+            "<div><b>Ville Adresse proprietaire:</b> "+ data.ville_adr_prop +"</div>"+
+            "<div><b>Code postal proprietaire:</b> "+ data.cp_adr_prop +"</div>"+
+            "<div><b>Reglementation d'urbanisme:</b> "+ data.regl_usage +"</div>"+
+            "<div><b>Hauteur:</b> "+ data.regl_hauteur +"</div>"+
+            "<div><b>Etages:</b> "+ data.regl_etages +"</div>"+
+            "<div><b>Densite:</b> "+ data.regl_densite +"</div>"+
+            "<div><b>Implantation:</b> "+ data.regl_implantation +"</div>"+
+            "<div><b>Unites de paysage:</b> "+ data.regl_unite_paysage +"</div>"+
+            "<div><b>Nom de l'immeuble:</b> "+ data.zone_patrimoine +"</div>"+
+            "<div><b>Type de zone tampon:</b> "+ data.type_zone_patrimoine +"</div>"+
+            "<div><b>Interet patrimonial:</b> "+ data.interet_immeuble +"</div>"+
+            "<div><b>Quartier d'interet:</b> "+ data.interet_quartier +"</div>"+
+            "<div><b>Moins de 500 m du métro:</b> "+ data.tampon_500_metro +"</div>";
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentHtml
+            });
+
+            marker.addListener('click', function() {
+                closeInfos();
+                infowindows[0] = infowindow;
+                infowindow.open(marker.get('map'), marker);
+                map.setZoom(15);
+                map.setCenter(marker.getPosition());
+/*                box_index = markers.indexOf(marker);
+                $(".box[data-marker="+box_index+"]").siblings().removeClass("active");
+                $(".box[data-marker="+box_index+"]").addClass("active");
+*/            });
+
+        }
+
+        function addMarkers(map){
+
+            for (terrain in terrains) {
+                var obj = terrains[terrain];
+
+                var latLng = new google.maps.LatLng(obj.fields.latitude, obj.fields.longitude);
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                });
+
+                markers.push(marker);
+                markers_map[obj.pk] = markers.length - 1;
+                addInfoWindow(marker, obj.fields);
+                map.panTo(latLng);
+            }
+
+        }
 
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
@@ -132,12 +203,12 @@
             });
           });
 
-
+          addMarkers(map);
         }
+
 
         $(document).ready(function(){
             $(".plus").click(function() {
-
                 var $this = $(this);
                 var $parent = $this.parents("tr");
 
@@ -152,8 +223,19 @@
                     $this.find("img.minus-icon").show();
                     $this.find("img.minus-icon").siblings().hide();
                 }
+            });
+
+            $("span.show-on-map").click(function() {
+
+                var $pk = $(this).data("pk");
+                var $index = markers_map[$pk];
+                google.maps.event.trigger(markers[$index], "click");
+                window.scrollTo(0, 0);
+
+
 
             });
+
         });
 
     </script>

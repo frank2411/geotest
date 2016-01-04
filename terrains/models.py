@@ -288,5 +288,15 @@ class Circonscription(models.Model):
     terrains = models.ManyToManyField(Terrain, blank=True)
     objects = models.GeoManager()
 
+    @staticmethod
+    def get_circonscriptions_terrains(circonscriptions):
+        if not circonscriptions:
+            return []
+
+        circ_pks = circonscriptions.values_list("pk", flat=True)
+        terrains = Terrain.objects.filter(circonscription__pk__in=circ_pks)
+
+        return terrains
+
     def __unicode__(self):
         return self.frname

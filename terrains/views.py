@@ -47,20 +47,13 @@ def circonscriptions(request):
         terrains__isnull=False).prefetch_related(
         "terrains"
     ).distinct()
-
-    # circonscriptions = Circonscription.objects.filter(
-    #     provcode="QC").prefetch_related(
-    #     "terrains"
-    # ).distinct()
-
-    # if request.GET.get("circonscriptions"):
-    #     terrains = Terrain.get_terrain_in_circonscription(
-    #         request.GET.get("circonscriptions"))
+    terrains = Circonscription.get_circonscriptions_terrains(circonscriptions)
 
     context["circonscriptions_geojson"] = serializers.serialize(
         'geojson', circonscriptions)
 
     context["circonscriptions"] = circonscriptions
     context["terrains"] = terrains
-    # context["form"] = CirconscriptionSearchForm(request.GET)
+    context["terrains_json"] = serializers.serialize("json", terrains)
+
     return render(request, "circonscriptions.html", context)
