@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from terrains.models import Terrain, Circonscription
+from terrains.models import Terrain, Circonscription, MONTREAL_CIRCONSCRIPTIONS
 from terrains.forms import CirconscriptionSearchForm, TerrainOrderingForm
 from django.core import serializers
 import json
@@ -44,7 +44,8 @@ def terrains(request):
 def circonscriptions(request):
     context = {}
     circonscriptions = Circonscription.objects.filter(
-        terrains__isnull=False).prefetch_related(
+        fednum__in=MONTREAL_CIRCONSCRIPTIONS
+    ).prefetch_related(
         "terrains"
     ).distinct()
     terrains = Circonscription.get_circonscriptions_terrains(circonscriptions)

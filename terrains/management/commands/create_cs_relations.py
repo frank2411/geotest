@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from terrains.models import Terrain, Circonscription
+from terrains.models import Terrain, Circonscription, MONTREAL_CIRCONSCRIPTIONS
 from django.db.models import Avg, Max, Min
 
 
@@ -27,46 +27,6 @@ class Command(BaseCommand):
     #     u"Ville-Marie--Le Sud-Ouest--\u00cele-des-Soeurs",
     # ]
 
-    # List of fednum for montreal circonscriptions
-    MONTREAL_CIRCONSCRIPTIONS = [
-        24003,
-        # u"Ahuntsic-Cartierville",
-        24015,
-        # u"Bourassa",
-        24028,
-        # u"Hochelaga",
-        24029,
-        # u"Honor\u00e9-Mercier",
-        24037,
-        # u"LaSalle--\u00c9mard--Verdun",
-        24036,
-        # u"Lac-Saint-Louis",
-        24033,
-        # u"La Pointe-de-l'\u00cele",
-        24024,
-        # u"Dorval--Lachine--LaSalle",
-        24039,
-        # u"Laurier--Sainte-Marie",
-        24052,
-        # u"Mont-Royal",
-        24053,
-        # u"Notre-Dame-de-Gr\u00e2ce--Westmount",
-        24054,
-        # u"Outremont",
-        24055,
-        # u"Papineau",
-        24056,
-        # u"Pierrefonds--Dollard",
-        24064,
-        # u"Rosemont--La Petite-Patrie",
-        24068,
-        # u"Saint-Laurent"
-        24069,
-        # u"Saint-L\u00e9onard--Saint-Michel"
-        24077,
-        # u"Ville-Marie--Le Sud-Ouest--\u00cele-des-Soeurs"
-    ]
-
     def handle(self, *args, **options):
         terrains = Terrain.objects.all()
 
@@ -74,7 +34,7 @@ class Command(BaseCommand):
             try:
                 circonscription = Circonscription.objects.get(
                     geom__contains=terrain.coordinates,
-                    fednum__in=self.MONTREAL_CIRCONSCRIPTIONS)
+                    fednum__in=MONTREAL_CIRCONSCRIPTIONS)
             except Circonscription.DoesNotExist:
                 print "TERRAIN IS OUT OF MONTREAL"
                 continue
