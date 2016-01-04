@@ -33,3 +33,4 @@ html, body { height: 100%; margin: 0; padding: 0; }
 .plus img {width: 20px;height: 20px;vertical-align: middle;}
 .plus img.minus-icon {display: none;}
 .container {padding: 10px;}
+.show-on-map {cursor: pointer;}
