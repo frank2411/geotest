@@ -1,0 +1,35 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+#map {height: 500px; }
+.left {float: left;}
+.clear {clear: both;}
+.half {width: 46%;padding: 15px;}
+.box {border: 1px solid;padding: 5px;cursor: pointer;}
+.active {background: red;}
+.legend {margin-top: 20px;}
+.step {height: 37px;position: relative;}
+.step .square {display: inline-block; height: 37px; width: 30px; /*border-bottom: 1px solid;*/} 
+.step .square.blue {background: url('/static/terrains/appartements/appartment-blue.png') no-repeat;}
+.step .square.yellow {background: url('/static/terrains/appartements/appartment-yellow.png')  no-repeat;}
+.step .square.red {background: url('/static/terrains/appartements/appartment-red.png')  no-repeat;}
+.step .square.green {background: url('/static/terrains/appartements/appartment-green.png')  no-repeat;}
+.step .square.azure {background: url('/static/terrains/appartements/appartment-azure.png')  no-repeat;}
+.step .square.purple {background: url('/static/terrains/appartements/appartment-purple.png')  no-repeat;}
+.step .square.purplelight {background: url('/static/terrains/appartements/appartment-purplelight.png')  no-repeat;}
+.step .square.purplesuperlight {background: url('/static/terrains/appartements/appartment-purplesuperlight.png')  no-repeat;}
+.step .square.zero {height: 37px;}
+.step .values {position: absolute;top: 8px;left: 40px;}
+.step .value {display: inline-block;}
+.box-container {height: 480px; overflow-y: scroll;}
+.circonscription-container {margin-bottom: 30px;}
+.circonscriptions-table {padding: 5px;border-collapse:collapse;width: 100%;}
+.terrains-table {padding: 20px;}
+.circonscriptions-table th, .terrains-table th {text-align: left; padding: 5px;}
+.circonscriptions-table tr.parent {background: #33ff33;}
+.circonscriptions-table tr.parent td {padding: 5px;}
+.circonscriptions-table tr.hidden {display: none;}
+.circonscriptions-table td.big {background: #eee;}
+.terrains-table td {border-bottom: 1px solid #000;padding: 5px;}
+.plus {display: inline-block;width: 20px;height: 20px;text-align: center;cursor: pointer;}
+.plus img {width: 20px;height: 20px;vertical-align: middle;}
+.plus img.minus-icon {display: none;}
+.container {padding: 10px;}

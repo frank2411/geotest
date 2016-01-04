@@ -4,30 +4,7 @@
     <meta charset="UTF-8">
     <title>Document</title>
 
-    <style type="text/css">
-      html, body { height: 100%; margin: 0; padding: 0; }
-      #map {height: 500px; }
-      .left {float: left;}
-      .clear {clear: both;}
-      .half {width: 46%;padding: 15px;}
-      .box {border: 1px solid;}
-      .active {background: red;}
-      .legend {margin-top: 20px;}
-      .step {height: 37px;position: relative;}
-      .step .square {display: inline-block; height: 37px; width: 30px; /*border-bottom: 1px solid;*/} 
-      .step .square.blue {background: url('/static/terrains/appartements/appartment-blue.png') no-repeat;}
-      .step .square.yellow {background: url('/static/terrains/appartements/appartment-yellow.png')  no-repeat;}
-      .step .square.red {background: url('/static/terrains/appartements/appartment-red.png')  no-repeat;}
-      .step .square.green {background: url('/static/terrains/appartements/appartment-green.png')  no-repeat;}
-      .step .square.azure {background: url('/static/terrains/appartements/appartment-azure.png')  no-repeat;}
-      .step .square.purple {background: url('/static/terrains/appartements/appartment-purple.png')  no-repeat;}
-      .step .square.purplelight {background: url('/static/terrains/appartements/appartment-purplelight.png')  no-repeat;}
-      .step .square.purplesuperlight {background: url('/static/terrains/appartements/appartment-purplesuperlight.png')  no-repeat;}
-      .step .square.zero {height: 37px;}
-      .step .values {position: absolute;top: 8px;left: 40px;}
-      .step .value {display: inline-block;}
-      .box-container {height: 480px; overflow-y: scroll;}
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/terrains/css/style.css">
     <script src="/static/terrains/js/jquery.min.js"></script>
 
 </head>
@@ -52,16 +29,17 @@
             
             <form action="" method="GET">
                 {{ordering_form}}
-                <input type="submit" value="search"> 
+                <input type="submit" value="Order"> 
             </form>
             
             <div class="box-container">
             {% for terrain in terrains %}
                 
                 <div class="box" data-marker="{{forloop.counter0}}">
-                    {{terrain}} value: {{terrain.total_value}} 
-                    terrain: {{terrain.valeur_terrain}}
-                    batiment: {{terrain.valeur_batiment}}
+                    <b>Addresse</b>: {{terrain}}<br>
+                    <b>Valeur totale</b>: {{terrain.total_value}} 
+                    <b>Valeur terrain</b>: {{terrain.valeur_terrain}}
+                    <b>Valeur batiment</b>: {{terrain.valeur_batiment}}
                 </div>
 
             {% endfor %}
@@ -136,8 +114,6 @@
         }
     
         function getIcon(obj) {
-            // console.log(ordering)
-            // console.log(typeof ordering)
             if(ordering && ordering != "None") {
                 value = obj[ordering_attributes[ordering]];
             } else {
