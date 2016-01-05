@@ -1,3 +1,4 @@
+{% load terraintags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +18,8 @@
                     <div class="step">
                         <div class="square {{values.color}}"></div>
                         <div class="values">
-                            <div class="value">{{values.min_value}}</div>
-                            <div class="value"> - {{values.max_value}}</div>                            
+                            <div class="value">{{values.min_value|dollarify}}</div>
+                            <div class="value"> - {{values.max_value|dollarify}}</div>                            
                         </div>
                     </div>
                 {% endfor %}
@@ -37,9 +38,9 @@
                 
                 <div class="box" data-marker="{{forloop.counter0}}">
                     <b>Addresse</b>: {{terrain}}<br>
-                    <b>Valeur totale</b>: {{terrain.total_value}} 
-                    <b>Valeur terrain</b>: {{terrain.valeur_terrain}}
-                    <b>Valeur batiment</b>: {{terrain.valeur_batiment}}
+                    <b>Valeur totale</b>: {{terrain.total_value|dollarify}}<br>
+                    <b>Valeur terrain</b>: {{terrain.valeur_terrain|dollarify}}<br>
+                    <b>Valeur batiment</b>: {{terrain.valeur_batiment|dollarify}}<br>
                 </div>
 
             {% endfor %}

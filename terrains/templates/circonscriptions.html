@@ -1,3 +1,4 @@
+{% load terraintags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,12 +38,12 @@
                                 <img class="plus-icon" src="/static/terrains/icons/plus-icon.png" alt="">
                                 <img class="minus-icon" src="/static/terrains/icons/minus-icon.png" alt="">
                             </span> {{circonscription.frname}} ({{circonscription.terrains.count}})</td>
-                        <td>{{circonscription.valeur_terrain_moyen}}</td>
-                        <td>{{circonscription.valeur_batiment_moyen}}</td>
-                        <td>{{circonscription.valeur_terrain_min}}</td>
-                        <td>{{circonscription.valeur_batiment_min}}</td>
-                        <td>{{circonscription.valeur_terrain_max}}</td>
-                        <td>{{circonscription.valeur_batiment_max}}</td>
+                        <td>{{circonscription.valeur_terrain_moyen|dollarify}}</td>
+                        <td>{{circonscription.valeur_batiment_moyen|dollarify}}</td>
+                        <td>{{circonscription.valeur_terrain_min|dollarify}}</td>
+                        <td>{{circonscription.valeur_batiment_min|dollarify}}</td>
+                        <td>{{circonscription.valeur_terrain_max|dollarify}}</td>
+                        <td>{{circonscription.valeur_batiment_max|dollarify}}</td>
                     </tr>
                     
                     <tr class="hidden">
@@ -57,8 +58,8 @@
                                 {% for terrain in circonscription.terrains.all %}
                                 <tr>
                                     <td>{{terrain}}</td>
-                                    <td>{{terrain.valeur_terrain}}</td>
-                                    <td>{{terrain.valeur_batiment}}</td>
+                                    <td>{{terrain.valeur_terrain|dollarify}}</td>
+                                    <td>{{terrain.valeur_batiment|dollarify}}</td>
                                     <td><span class="show-on-map" data-pk="{{terrain.pk}}">Show on map</span></td>
                                 </tr>
                                 {% endfor %}
