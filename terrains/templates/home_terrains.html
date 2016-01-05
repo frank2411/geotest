@@ -11,24 +11,13 @@
 </head>
 <body>
     <div class="container">
-        <div class="left half">
+        <div class="left half left-half">
             <div id="map"></div>
-            <div class="legend">
-                {% for r, values in ranges.items %}
-                    <div class="step">
-                        <div class="square {{values.color}}"></div>
-                        <div class="values">
-                            <div class="value">{{values.min_value|dollarify}}</div>
-                            <div class="value"> - {{values.max_value|dollarify}}</div>                            
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
         </div>
 
-        <div class="left half">
+        <div class="left half right-half">
             
-            <form action="" method="GET">
+            <form class="order-form" action="" method="GET">
                 {{ordering_form}}
                 <input type="submit" value="Order"> 
             </form>
@@ -37,10 +26,24 @@
             {% for terrain in terrains %}
                 
                 <div class="box" data-marker="{{forloop.counter0}}">
-                    <b>Addresse</b>: {{terrain}}<br>
-                    <b>Valeur totale</b>: {{terrain.total_value|dollarify}}<br>
-                    <b>Valeur terrain</b>: {{terrain.valeur_terrain|dollarify}}<br>
-                    <b>Valeur batiment</b>: {{terrain.valeur_batiment|dollarify}}<br>
+                    <table>
+                        <tr>
+                            <td class="box-label"><b>Addresse</b></td>
+                            <td class="box-value">{{terrain}}</td>
+                        </tr>
+                        <tr>
+                            <td class="box-label"><b>Valeur totale</b></td>
+                            <td class="box-value">{{terrain.total_value|dollarify}}</td>
+                        </tr>
+                        <tr>
+                            <td class="box-label"><b>Valeur terrain</b></td>
+                            <td class="box-value">{{terrain.valeur_terrain|dollarify}}</td>
+                        </tr>
+                        <tr>
+                            <td class="box-label"><b>Valeur batiment</b></td>
+                            <td class="box-value">{{terrain.valeur_batiment|dollarify}}</td>
+                        </tr>
+                    </table>
                 </div>
 
             {% endfor %}
@@ -48,6 +51,19 @@
         </div>
     
         <div class="clear"></div>
+
+        <div class="legend">
+            {% for r, values in ranges.items %}
+                <div class="step">
+                    <div class="square {{values.color}}"></div>
+                    <div class="values">
+                        <div class="value">{{values.min_value|dollarify}}</div>
+                        <div class="value"> - {{values.max_value|dollarify}}</div>                            
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
 
     <script type="text/javascript">
@@ -164,7 +180,7 @@
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
-            zoom: 11
+            zoom: 12
           });
 
           addMarkers(map);

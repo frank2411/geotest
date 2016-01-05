@@ -1,11 +1,17 @@
-html, body { height: 100%; margin: 0; padding: 0; }
+html, body { height: 100%; margin: 0; padding: 0; font-family: arial, sans-serif, helvetica;font-size: 15px;}
 #map {height: 500px; }
+.container {width: 1350px; min-height: 500px; margin: 0px auto;padding: 10px;}
+.circonscription-container {width: 1290px; min-height: 100%; margin: 0px auto;padding: 10px;}
 .left {float: left;}
 .clear {clear: both;}
-.half {width: 46%;padding: 15px;}
-.box {border: 1px solid;padding: 5px;cursor: pointer;}
-.active {background: red;}
+.half {width: 655px;}
+.left-half {padding: 15px 5px 15px 15px;}
+.right-half {padding: 15px 15px 15px 5px;}
+.active {background: #eee;}
 .legend {margin-top: 20px;}
+#id_ordering {background: #eee;color: #333;border-radius: 3px;border: 1px solid #ccc;font-weight: bold;height: 30px;cursor: pointer;}
+.order-form {margin-bottom: 5px;}
+.order-form input[type="submit"] {background: #eee;/* margin-bottom: 5px; */border: 1px solid #ccc;border-radius: 3px;height: 30px;cursor: pointer;font-weight: bold;color: #333;}
 .step {height: 37px;position: relative;}
 .step .square {display: inline-block; height: 37px; width: 30px; /*border-bottom: 1px solid;*/} 
 .step .square.blue {background: url('/static/terrains/appartements/appartment-blue.png') no-repeat;}
@@ -19,18 +25,34 @@ html, body { height: 100%; margin: 0; padding: 0; }
 .step .square.zero {height: 37px;}
 .step .values {position: absolute;top: 8px;left: 40px;}
 .step .value {display: inline-block;}
-.box-container {height: 480px; overflow-y: scroll;}
+.box-container {height: 465px; overflow-y: scroll;}
+.box {border-bottom: 1px solid #ccc;border-left: 1px solid #ccc;padding: 5px;cursor: pointer;}
+.box:hover {background: #eee;}
+.box-label {color: #333;}
+.box-value {color: #000;}
 .circonscription-container {margin-bottom: 30px;}
-.circonscriptions-table {padding: 5px;border-collapse:collapse;width: 100%;}
+.circonscriptions-table {padding: 5px;border-collapse:collapse;width: 100%;margin-top: 15px;font-family: verdana,arial,sans-serif;font-size:14px;color:#333333;border: 1px solid #a9c6c9;}
 .terrains-table {padding: 20px;}
 .circonscriptions-table th, .terrains-table th {text-align: left; padding: 5px;}
-.circonscriptions-table tr.parent {background: #33ff33;}
-.circonscriptions-table tr.parent td {padding: 5px;}
+.circonscriptions-table th {border: 1px solid #a9c6c9;padding: 8px;background-color:#d4e3e5;}
+
+/*.circonscriptions-table tr.parent {background: #33ff33;}*/
+.circonscriptions-table td {border: 1px solid #a9c6c9;padding: 8px;}
 .circonscriptions-table tr.hidden {display: none;}
 .circonscriptions-table td.big {background: #eee;}
-.terrains-table td {border-bottom: 1px solid #000;padding: 5px;}
+.circonscriptions-table tr.oddrowcolor{background-color:#d4e3e5;}
+.circonscriptions-table tr.evenrowcolor{background-color:#c3dde0;}
 .plus {display: inline-block;width: 20px;height: 20px;text-align: center;cursor: pointer;}
 .plus img {width: 20px;height: 20px;vertical-align: middle;}
 .plus img.minus-icon {display: none;}
-.container {padding: 10px;}
 .show-on-map {cursor: pointer;}
+
+.legend {margin-top: 0px;padding: 0px 15px;}
+.step {height: 40px;position: relative;display: inline-block;width: 255px;line-height: 20px;}
+.step .square {display: inline-block;height: 37px;vertical-align: middle;width: 30px;/* border-bottom: 1px solid; */}
+.step .values {position: static; top: 0px; left: 0px; display: inline-block;vertical-align: middle;}
+.circonscription-extra-padding {padding: 15px;}
+
+table.altrowstable td {
+
+}

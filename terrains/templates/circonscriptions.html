@@ -9,15 +9,15 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="">
+    <div class="circonscription-container">
+        <div class="circonscription-map-container">
             <div id="map"></div>
         </div>
 
 
-        <div class="circonscription-container">
+        <div class="circonscriptions-container">
             
-            <div class="box-container">
+            <div class="tables-container">
 
                 <table cellpadding="0" cellspacing="0" class="circonscriptions-table">
                     <tr>
@@ -32,7 +32,7 @@
 
                     {% for circonscription in circonscriptions %}
 
-                    <tr class="parent">
+                    <tr class="parent {% if forloop.counter|divisibleby:"2" %} oddrowcolor {% else %} evenrowcolor {% endif %}">
                         <td>
                             <span class="plus">
                                 <img class="plus-icon" src="/static/terrains/icons/plus-icon.png" alt="">
@@ -56,7 +56,7 @@
                                     <th></th>
                                 </tr>
                                 {% for terrain in circonscription.terrains.all %}
-                                <tr>
+                                <tr class="{% if forloop.counter|divisibleby:"2" %} oddrowcolor {% else %} evenrowcolor {% endif %}">
                                     <td>{{terrain}}</td>
                                     <td>{{terrain.valeur_terrain|dollarify}}</td>
                                     <td>{{terrain.valeur_batiment|dollarify}}</td>
@@ -148,22 +148,22 @@
         }
 
         function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 45.498469, lng: -73.562537},
-            zoom: 11
-          });
-
-          map.data.addGeoJson(to_polygon);
-          map.data.setStyle(function(feature) {
-            var color = 'red';
-            return ({
-              fillColor: color,
-              strokeColor: color,
-              strokeWeight: 3
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 45.498469, lng: -73.562537},
+                zoom: 10
             });
-          });
 
-          addMarkers(map);
+            map.data.addGeoJson(to_polygon);
+            map.data.setStyle(function(feature) {
+                var color = 'red';
+                return ({
+                    fillColor: color,
+                    strokeColor: color,
+                    strokeWeight: 3
+                });
+            });
+
+            addMarkers(map);
         }
 
 
