@@ -57,7 +57,8 @@ MONTREAL_CIRCONSCRIPTIONS = [
 
 class Terrain(models.Model):
 
-    ID = models.IntegerField(_(u"Identifiant unique"), unique=True)
+    identifiant_unique = models.IntegerField(
+        _(u"Identifiant unique"), unique=True)
     munid = models.IntegerField(
         _(u"Identifiant unique municipalite"), null=True)
     arrid = models.CharField(
@@ -67,7 +68,10 @@ class Terrain(models.Model):
     generique = models.CharField(_(u"Generique de rue"), max_length=15)
     specifique = models.CharField(_(u"Nom de la rue"), max_length=30)
 
-    complet = models.CharField(_(u"CIV+GENERIQUE+SPECIFIQUE"), max_length=45)
+    complet = models.CharField(
+        _(u"Addresse complet"),
+        max_length=45
+    )
     compte_foncier = models.CharField(
         _(u"Numero du compte foncier"), max_length=8)
 
@@ -172,6 +176,9 @@ class Terrain(models.Model):
             A dict of ranges values
         """
 
+        if not queryset:
+            return {}
+
         ranges = {}
         ordering_attributes = {
             "-total_value": "total_value",
@@ -259,6 +266,8 @@ class Terrain(models.Model):
         """
 
         cleaned_headers = []
+
+        # I remove the ID header i don't need it for cleaning or casting
         headers.pop(0)
 
         for i, head in enumerate(headers):
@@ -283,6 +292,7 @@ class Terrain(models.Model):
             A list of values to create or update a given object.
         """
 
+        # I delete the ID value from row because it's already in defaults
         row.pop(0)
         defaults = {}
         for i, head in enumerate(headers):
@@ -322,7 +332,7 @@ class Terrain(models.Model):
                 headers, row)
 
             terrain, created = Terrain.objects.update_or_create(
-                ID=to_check_id, defaults=defaults
+                identifiant_unique=to_check_id, defaults=defaults
             )
 
             if created:

@@ -28,7 +28,7 @@
                 <div class="box" data-marker="{{forloop.counter0}}">
                     <table>
                         <tr>
-                            <td class="box-label"><b>Addresse</b></td>
+                            <td class="box-label"><b>Adresse complète</b></td>
                             <td class="box-value">{{terrain}}</td>
                         </tr>
                         <tr>
@@ -94,7 +94,7 @@
 
             var contentHtml = "<div><b>Valeur batiment:</b> "+ data.valeur_batiment +"</div>"+
             "<div><b>Valeur terrain:</b> "+ data.valeur_terrain +"</div>"+
-            "<div><b>Addresse complet:</b>"+ data.complet +"</div>"+
+            "<div><b>Adresse complète:</b>"+ data.complet +"</div>"+
             "<div><b>Numero compte foncier:</b> "+ data.compte_foncier +"</div>"+
             "<div><b>Nom proprietaire:</b> "+ data.nom_proprietaire +"</div>"+
             "<div><b>Prenom proprietaire:</b> "+ data.prenom_proprietaire +"</div>"+
@@ -179,7 +179,7 @@
 
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
+            center: {lat: 45.498469, lng: -73.562537},
             zoom: 12
           });
 
