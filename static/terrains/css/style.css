@@ -25,7 +25,7 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: arial, sans-serif
 .step .square.zero {height: 37px;}
 .step .values {position: absolute;top: 8px;left: 40px;}
 .step .value {display: inline-block;}
-.box-container {height: 465px; overflow-y: scroll;}
+.box-container {height: 465px; overflow-y: scroll; font-size: 14px;}
 .box {border-bottom: 1px solid #ccc;border-left: 1px solid #ccc;padding: 5px;cursor: pointer;}
 .box:hover {background: #eee;}
 .box-label {color: #333;}
@@ -35,13 +35,13 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: arial, sans-serif
 .terrains-table {padding: 20px;}
 .circonscriptions-table th, .terrains-table th {text-align: left; padding: 5px;}
 .circonscriptions-table th {border: 1px solid #a9c6c9;padding: 8px;background-color:#d4e3e5;}
-
 /*.circonscriptions-table tr.parent {background: #33ff33;}*/
 .circonscriptions-table td {border: 1px solid #a9c6c9;padding: 8px;}
 .circonscriptions-table tr.hidden {display: none;}
-.circonscriptions-table td.big {background: #eee;}
+.circonscriptions-table td.big {background: #efe;}
 .circonscriptions-table tr.oddrowcolor{background-color:#d4e3e5;}
-.circonscriptions-table tr.evenrowcolor{background-color:#c3dde0;}
+/*.circonscriptions-table tr.evenrowcolor{background-color:#c3dde0;}*/
+.circonscriptions-table tr.evenrowcolor{background-color:#fff;}
 .plus {display: inline-block;width: 20px;height: 20px;text-align: center;cursor: pointer;}
 .plus img {width: 20px;height: 20px;vertical-align: middle;}
 .plus img.minus-icon {display: none;}
@@ -52,7 +52,3 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: arial, sans-serif
 .step .square {display: inline-block;height: 37px;vertical-align: middle;width: 30px;/* border-bottom: 1px solid; */}
 .step .values {position: static; top: 0px; left: 0px; display: inline-block;vertical-align: middle;}
 .circonscription-extra-padding {padding: 15px;}
-
-table.altrowstable td {
-
-}

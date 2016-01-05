@@ -5,7 +5,10 @@ import csv
 from django.contrib.gis.geos import GEOSGeometry
 
 
+# Fields that need casting on csv import
 CAST_FIELDS = ["IntegerField", "FloatField"]
+
+# Map functions for field casting
 CAST_FUNCTIONS = {
     "IntegerField": int,
     "FloatField": float
@@ -159,6 +162,17 @@ class Terrain(models.Model):
 
     @staticmethod
     def generate_ranges(queryset, ordering):
+        """Generates 8 ranges to enlight price differences
+        between Terrain objects
+
+        Args:
+            queryset(queryset): A queryset containing all terrains
+            ordering(str): A string representig the current ordering param
+
+        Returns:
+            A dict of ranges values
+        """
+
         ranges = {}
         ordering_attributes = {
             "-total_value": "total_value",
@@ -220,6 +234,15 @@ class Terrain(models.Model):
 
     @staticmethod
     def get_terrain_in_circonscription(fednum):
+        """Returns all terrains in a specific circonscription area.
+
+        Args:
+            fednum(int): Federal unique id for circonscription
+
+        Returns:
+            A list of terrains.
+        """
+
         circonscription = Circonscription.objects.get(fednum=fednum)
         terrains = Terrain.objects.filter(
             coordinates__within=circonscription.geom)
@@ -227,6 +250,15 @@ class Terrain(models.Model):
 
     @staticmethod
     def clean_headers(headers):
+        """Clean first line(headers) of the csv file.
+
+        Args:
+            headers(list): A list of strings
+
+        Returns:
+            A list of cleaned headers.
+        """
+
         cleaned_headers = []
         headers.pop(0)
 
@@ -240,6 +272,18 @@ class Terrain(models.Model):
 
     @staticmethod
     def generate_defaults(headers, row):
+        """Generates default data for the update_or_create method
+
+        Args:
+            headers(list): A list of strings that maps
+                the field name on the model
+            row(list): A list of data used to generate defaults
+                based on the headers list
+
+        Returns:
+            A list of values to create or update a given object.
+        """
+
         row.pop(0)
         defaults = {}
         for i, head in enumerate(headers):
@@ -260,6 +304,13 @@ class Terrain(models.Model):
 
     @staticmethod
     def generate_terrain_from_csv(csvfile):
+        """Generates or updates a Terrain object from an imported csv file.
+
+        Args:
+            csvfile(file object): A csv file to read
+
+        """
+
         csvfilebuffer = open(csvfile.path, 'rb')
         spamreader = csv.reader(csvfilebuffer, delimiter=',', quotechar='"')
 
@@ -331,6 +382,16 @@ class Circonscription(models.Model):
 
     @staticmethod
     def get_circonscriptions_terrains(circonscriptions):
+        """Retrieves all terrains for a queryset of circonscriptions.
+
+        Args:
+            circonscriptions(queryset): A Circonscription queryset
+
+        Returns:
+            A Terrain queryset.
+
+        """
+
         if not circonscriptions:
             return []
 

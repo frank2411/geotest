@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from terrains.models import Terrain, Circonscription, MONTREAL_CIRCONSCRIPTIONS
 from django.db.models import Avg, Max, Min
 
@@ -6,28 +6,11 @@ from django.db.models import Avg, Max, Min
 class Command(BaseCommand):
     help = 'Create relations between the terrains and the circonscriptions'
 
-    # MONTREAL_CIRCONSCRIPTIONS = [
-    #     u"Ahuntsic-Cartierville",
-    #     u"Bourassa",
-    #     u"Hochelaga",
-    #     u"Honor\u00e9-Mercier",
-    #     u"LaSalle--\u00c9mard--Verdun",
-    #     u"Lac-Saint-Louis",
-    #     u"La Pointe-de-l'\u00cele",
-    #     u"Dorval--Lachine--LaSalle",
-    #     u"Laurier--Sainte-Marie",
-    #     u"Mont-Royal",
-    #     u"Notre-Dame-de-Gr\u00e2ce--Westmount",
-    #     u"Outremont",
-    #     u"Papineau",
-    #     u"Pierrefonds--Dollard",
-    #     u"Rosemont--La Petite-Patrie",
-    #     u"Saint-Laurent",
-    #     u"Saint-L\u00e9onard--Saint-Michel",
-    #     u"Ville-Marie--Le Sud-Ouest--\u00cele-des-Soeurs",
-    # ]
-
     def handle(self, *args, **options):
+        """Create a relation between a terrain and a circonscription
+            Setting also average, min and max values.
+        """
+
         terrains = Terrain.objects.all()
 
         for terrain in terrains:
