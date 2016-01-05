@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
-from terrains.models import Terrain, Circonscription, MONTREAL_CIRCONSCRIPTIONS
 from django.db.models import Avg, Max, Min
+from terrains.models import Terrain, Circonscription, MONTREAL_CIRCONSCRIPTIONS
 
 
 class Command(BaseCommand):
@@ -26,7 +26,8 @@ class Command(BaseCommand):
             print "TERRAIN ASSOCIATED"
 
         circonscriptions = Circonscription.objects.filter(
-            terrains__isnull=False).distinct().annotate(
+            terrains__isnull=False
+        ).distinct().annotate(
             avg_valeur_batiment=Avg("terrains__valeur_batiment"),
             avg_valeur_terrain=Avg("terrains__valeur_terrain"),
             max_valeur_batiment=Max("terrains__valeur_batiment"),

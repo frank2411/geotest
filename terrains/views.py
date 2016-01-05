@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from terrains.models import Terrain, Circonscription, MONTREAL_CIRCONSCRIPTIONS
-from terrains.forms import TerrainOrderingForm
-from django.core import serializers
 import json
+from django.shortcuts import render
+from django.core import serializers
+from terrains.forms import TerrainOrderingForm
+from terrains.models import Terrain, Circonscription, MONTREAL_CIRCONSCRIPTIONS
 
 
 allowed_orderings = [

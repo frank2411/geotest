@@ -1,5 +1,5 @@
-from django.conf.urls import patterns, url
-from terrains.views import *
+from django.conf.urls import url
+from terrains.views import terrains, circonscriptions
 
 urlpatterns = (
     url(r'^$', terrains, name='terrains'),

@@ -1,9 +1,9 @@
 import os
 from django.contrib.gis.utils import LayerMapping
-from models import Circonscription
+from terrains.models import Circonscription
 
 # Auto-generated `LayerMapping` dictionary for Circonscription model
-circonscription_mapping = {
+CIRCONSCRIPTION_MAPPING = {
     'nid': 'NID',
     'fednum': 'FEDNUM',
     'enname': 'ENNAME',
@@ -20,12 +20,12 @@ circonscription_mapping = {
 }
 
 
-world_shp = os.path.abspath(
+WORLD_SHP = os.path.abspath(
     os.path.join(os.path.dirname(__file__), 'data', 'FED_CA_2_1_en.shp'))
 
 
 def run(verbose=True):
     lm = LayerMapping(
-        Circonscription, world_shp, circonscription_mapping, encoding='utf-8')
+        Circonscription, WORLD_SHP, CIRCONSCRIPTION_MAPPING, encoding='utf-8')
 
     lm.save(strict=True, verbose=verbose)

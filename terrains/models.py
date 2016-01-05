@@ -1,7 +1,6 @@
+import csv
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
-# from geopy.geocoders import GoogleV3
-import csv
 from django.contrib.gis.geos import GEOSGeometry
 
 
@@ -332,6 +331,9 @@ class Terrain(models.Model):
         csvfilebuffer.close()
 
     def save(self, *args, **kwargs):
+        """On save i set the value of the
+            coordinates field to allow correct interaction with geodjango
+        """
         pointstr = 'POINT({} {})'.format(self.longitude, self.latitude)
         self.coordinates = GEOSGeometry(pointstr, srid=4326)
         self.total_value = self.valeur_batiment + self.valeur_terrain

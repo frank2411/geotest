@@ -27,8 +27,10 @@ class CirconscriptionSearchForm(forms.Form):
         label="Circonscriptions",
         choices=[
             (x, y) for x, y in Circonscription.objects.filter(
-                provcode="QC").values_list(
-                "fednum", "frname").order_by("enname")
+                provcode="QC"
+            ).values_list(
+                "fednum", "frname"
+            ).order_by("enname")
         ],
         required=False
     )

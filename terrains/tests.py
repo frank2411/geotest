@@ -1,7 +1,7 @@
-from django.test import TestCase
-from terrains.models import Terrain
 import os
+from django.test import TestCase
 from django.core.files.base import ContentFile
+from terrains.models import Terrain
 
 
 class TerrainsTestCase(TestCase):
