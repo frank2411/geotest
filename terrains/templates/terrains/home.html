@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/terrains/css/style.css">
+
+</head>
+<body class="greybody">
+    <div class="container">
+
+        <div id="openModal" class="modalDialog">
+            <div>
+                <h2>Partie 1</h2>
+                <p>Obtenir les données et afficher leur représentations géolocalisée sur une page web (flask ou django) en utilisant GoogleMap API.</p>
+                <p>
+                Le besoin du client :<br><br>
+                - Afficher les données décrivant le batiment, la valeur du batiment et la valeur du terrain afin d'aider à différencier les terrain/batiment les plus chers et les moins chers.</p>
+                <p style="text-align:center;"><a class="button-link" target="_blank" href="{% url 'terrains' %}">Voir partie 1</a></p>
+            </div>
+        </div>
+
+        <div id="openModal" class="modalDialog">
+            <div>
+                <h2>Partie 2</h2>
+                <p>Circonscription fédérale :<br>
+                A partir du résultat précédent et des données disponibles à l'Adresse : <br>
+                http://geogratis.gc.ca/api/fr/nrcan-rncan/ess-sst/56124851-71fc-4f94-8df2-40f59cd1dd46.html.
+                </p>
+                <p>
+                Objectif :<br><br>
+                - Créer un rapport de la valeur des batiments et des terrains par circonscription à Montreal. </p>
+                <p style="text-align:center;"><a class="button-link" target="_blank" href="{% url 'circonscriptions' %}">Voir partie 2</a></p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

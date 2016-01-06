@@ -15,6 +15,10 @@ allowed_orderings = [
 ]
 
 
+def home(request):
+    return render(request, "terrains/home.html", {})
+
+
 def terrains(request):
     context = {}
     ordering_param = None
@@ -38,7 +42,7 @@ def terrains(request):
     context["ordering_form"] = ordering_form
     context["ordering_param"] = ordering_param
 
-    return render(request, "home_terrains.html", context)
+    return render(request, "terrains/home_terrains.html", context)
 
 
 def circonscriptions(request):
@@ -55,4 +59,4 @@ def circonscriptions(request):
     context["terrains"] = terrains
     context["terrains_json"] = serializers.serialize("json", terrains)
 
-    return render(request, "circonscriptions.html", context)
+    return render(request, "terrains/home_circonscriptions.html", context)
