@@ -1,2 +1,2 @@
-test project
-============
+Simple geotest project
+======================
