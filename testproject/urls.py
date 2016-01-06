@@ -7,7 +7,6 @@ urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('terrains.urls')),
-    # url(r'^$', include('custom_utils.urls')),
 )
 
 if 'debug_toolbar' in settings.INSTALLED_APPS:
