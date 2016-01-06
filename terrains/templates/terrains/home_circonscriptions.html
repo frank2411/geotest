@@ -3,20 +3,22 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Montréal Circonscriptions</title>
     <link rel="stylesheet" type="text/css" href="/static/terrains/css/style.css">
     <script src="/static/terrains/js/jquery.min.js"></script>
 </head>
 <body>
 
     <div class="circonscription-container">
+
+        <p style="text-align:center;"><a class="button-link" href="{% url 'home' %}">Go back</a></p>    
+
         <div class="circonscription-map-container">
             <div id="map"></div>
         </div>
 
 
         <div class="circonscriptions-container">
-            
             <div class="tables-container">
 
                 <table cellpadding="0" cellspacing="0" class="circonscriptions-table">
@@ -70,7 +72,8 @@
                 </table>
             </div>
         </div>
-    
+
+        <p style="text-align:center;"><a class="button-link" href="{% url 'home' %}">Go back</a></p>    
 
     </div>
 
