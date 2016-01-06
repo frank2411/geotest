@@ -3,6 +3,7 @@ from terrains.models import TerrainImport, Circonscription
 
 
 class TerrainImportAdminForm(forms.ModelForm):
+    """Custom admin form to validate csv file format"""
 
     def clean_csvfile(self):
         csvfile = self.cleaned_data.get("csvfile")
@@ -23,6 +24,8 @@ class TerrainImportAdminForm(forms.ModelForm):
 
 
 class CirconscriptionSearchForm(forms.Form):
+    """Form used to search for a specific circonscription"""
+
     circonscriptions = forms.ChoiceField(
         label="Circonscriptions",
         choices=[
@@ -37,6 +40,8 @@ class CirconscriptionSearchForm(forms.Form):
 
 
 class TerrainOrderingForm(forms.Form):
+    """Custom form to order terrains queryset"""
+
     ordering = forms.ChoiceField(
         label="",
         choices=(

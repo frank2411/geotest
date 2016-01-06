@@ -20,6 +20,9 @@ def home(request):
 
 
 def terrains(request):
+    """View that returns all terrains, with custom order if present.
+        This view also creates the ranges to underline price differences"""
+
     context = {}
     ordering_param = None
     ordering_form = TerrainOrderingForm()
@@ -46,6 +49,8 @@ def terrains(request):
 
 
 def circonscriptions(request):
+    """View that returns all circonscriptions in montreal
+        and their associated terrains"""
     context = {}
     circonscriptions = Circonscription.objects.filter(
         fednum__in=MONTREAL_CIRCONSCRIPTIONS
